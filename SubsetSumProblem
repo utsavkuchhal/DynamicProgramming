@@ -1,0 +1,49 @@
+
+public class SubsetProblem {
+
+	public static void main(String[] args) {
+		
+		int[] arr = {1,2,3,4,5,6,7,8,9,10};
+		System.out.println(maxSubsetSum(arr,40));
+		
+	}
+	
+	public static boolean maxSubsetSum(int[] arr, int vidx,int sum)
+	{
+		if(sum == 0)
+		{
+			return true;
+		}
+		if(vidx == 0)
+		{
+			return false;
+		}
+			if(arr[vidx - 1] <= sum)
+		return maxSubsetSum(arr,vidx - 1,sum - arr[vidx - 1]) || maxSubsetSum(arr,vidx - 1,sum);
+			else
+		return maxSubsetSum(arr,vidx - 1,sum);
+	}
+	
+	public static boolean maxSubsetSum(int[] arr,int sum)
+	{
+		boolean[][] array = new boolean[sum + 1][arr.length + 1];
+			
+		for(int i = 0; i < sum + 1; i++)
+			array[i][0] = false;
+		
+		for(int j = 0; j < arr.length + 1; j++)
+			array[0][j] = true;
+		
+		for(int i = 1; i < sum + 1; i++)
+		{
+			for(int j = 1; j < arr.length + 1; j++)
+			{
+				if(i >= arr[j - 1])
+					array[i][j] = array[i - arr[j - 1]][j - 1] || array[i][j - 1];
+				else
+					array[i][j] = array[i][j - 1];
+			}
+		}
+		return array[sum][arr.length];
+	}
+}
