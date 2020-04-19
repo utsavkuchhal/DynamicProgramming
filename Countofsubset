@@ -1,0 +1,24 @@
+
+public class Countofsubset {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			int[] arr = {1,2,3,4};
+			
+			System.out.println(Countofsubset(arr,arr.length,4));		
+	}
+	
+	public static int Countofsubset(int[] arr,int vidx, int sum)
+	{
+		if(sum == 0)
+			return 1;
+		
+		if(vidx == 0)
+			return 0;
+		
+		if(arr[vidx - 1] <= sum)
+		return Countofsubset(arr,vidx - 1,sum - arr[vidx - 1]) + Countofsubset(arr,vidx - 1,sum);
+		else
+		return Countofsubset(arr,vidx - 1,sum);
+	}	
+}
