@@ -1,0 +1,36 @@
+
+public class EqualSumPartition {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	int[] arr = {2,2,3,4,5};
+	int sum = 0;
+		
+	for(int i = 0; i < arr.length; i++)
+	{
+		sum = sum + arr[i];
+	}
+	
+	if(sum % 2 != 0)
+		System.out.print(false);
+	else 
+		System.out.println(maxSubsetSum(arr, arr.length, sum / 2));
+		
+	}
+	
+	public static boolean maxSubsetSum(int[] arr, int vidx,int sum)
+	{
+		if(sum == 0)
+		{
+			return true;
+		}
+		if(vidx == 0)
+		{
+			return false;
+		}
+			if(arr[vidx - 1] <= sum)
+		return maxSubsetSum(arr,vidx - 1,sum - arr[vidx - 1]) || maxSubsetSum(arr,vidx - 1,sum);
+			else
+		return maxSubsetSum(arr,vidx - 1,sum);
+	}
+}
