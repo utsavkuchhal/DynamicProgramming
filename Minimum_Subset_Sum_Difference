@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+
+public class Minimum_Subset_Sum_Difference {
+
+	public static void main(String[] args) {
+		int[] arr = {1,2,7,3};
+		int sum = 0;
+		for(int i = 0; i < arr.length; i++)
+		{
+			sum = sum + arr[i];
+		}
+		System.out.println(Minimum_Subset_Sum_Difference(arr,sum,arr.length,0));
+	}
+	
+	public static int Minimum_Subset_Sum_Difference(int[] arr,int sum)
+	{
+		boolean[][] array = new boolean[sum + 1][arr.length + 1];
+		
+		for(int i = 0; i < sum + 1; i++)
+			array[i][0] = false;
+		
+		
+		for(int j = 0; j < arr.length + 1; j++)
+			array[0][j] = true;
+		
+		for(int i = 1; i < sum + 1; i++)
+		{
+			for(int j = 1; j < arr.length + 1; j++)
+			{
+				if(arr[j - 1] <= i)
+				{
+					array[i][j] = array[i][j - 1] || array[i - arr[j - 1]][j - 1];
+				}else {
+					array[i][j] = array[i][j - 1];
+				}
+			}
+		}
+		int min = Integer.MAX_VALUE;
+		for(int i = 0; i <=sum / 2; i++)
+		{
+			if(array[i][arr.length])
+			{
+				int temp = sum - 2*i;
+				if(temp < min)
+					min = temp;
+			}
+		}
+		return min;
+	}
+	
+	public static int Minimum_Subset_Sum_Difference(int[] arr,int sum,int vidx,int sumcal)
+	{
+		
+		if(vidx == 0)
+			return Math.abs(sum - 2*sumcal);
+		
+		return Math.min(Minimum_Subset_Sum_Difference(arr,sum,vidx - 1,sumcal + arr[vidx - 1]),
+				Minimum_Subset_Sum_Difference(arr,sum,vidx - 1,sumcal));
+	}
+}
