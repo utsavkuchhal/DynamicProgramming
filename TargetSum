@@ -1,0 +1,31 @@
+
+public class Count_subset_with_given_difference {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr = {1,1,2,3};
+		int total = 0;
+		for(int i = 0; i < arr.length; i++)
+		{
+			total = total + arr[i];
+		}
+		int diff = 1;
+		int sum = (total + diff) / 2;
+		System.out.println(Count_subset_with_given_difference(arr,sum,arr.length));
+	}
+	
+	public static int Count_subset_with_given_difference(int[] arr,int sum,int vidx)
+	{
+		if(sum == 0)
+			return 1;
+		
+		if(vidx == 0)
+			return 0;
+		
+		if(arr[vidx - 1] <= sum)
+		return Count_subset_with_given_difference(arr,sum - arr[vidx - 1],vidx - 1) + Count_subset_with_given_difference(arr,sum,vidx - 1);
+		else
+		return Count_subset_with_given_difference(arr,sum,vidx - 1);
+	}
+
+}
