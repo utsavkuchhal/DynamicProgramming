@@ -1,0 +1,57 @@
+
+public class Coin_change_count_ways {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			int[] arr = {1,2,3};
+			int sum = 5;
+			
+			System.out.println(Coin_change_count_ways(arr,sum));
+	}
+	
+	public static int Coin_change_count_ways(int[] arr,int vidx,int sum) {
+		if(sum == 0)
+		{
+			return 1;
+		}
+		if(vidx == 0)
+		{
+			return 0;
+		}
+		
+		if(arr[vidx - 1] <= sum)
+		{
+			return Coin_change_count_ways(arr,vidx,sum - arr[vidx - 1]) + Coin_change_count_ways(arr,vidx - 1,sum);
+		}
+		
+		return Coin_change_count_ways(arr,vidx - 1, sum);
+	}
+	
+	
+	public static int Coin_change_count_ways(int[] arr,int sum) {
+		
+		int[][] array = new int[sum + 1][arr.length + 1];
+		
+		for(int i = 0; i < sum + 1; i++)
+			array[i][0] = 0;
+		
+		
+		for(int j = 0; j < arr.length + 1; j++)
+			array[0][j] = 1;
+		
+		for(int i = 1; i < sum + 1; i++)
+		{
+			for(int j = 1; j < arr.length + 1; j++)
+			{
+				if(arr[j - 1] <= i)
+				{
+					array[i][j] = array[i][j - 1] + array[i - arr[j - 1]][j];
+				}else {
+					array[i][j] = array[i][j - 1];
+				}
+			}
+		}
+		
+		return array[sum][arr.length];
+	}
+}
