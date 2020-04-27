@@ -1,0 +1,42 @@
+import java.util.Arrays;
+
+public class LongestCommonSubstring {
+public static void main(String[] args) {
+	String a = "abcc";
+	String b = "abdecf";
+	
+		
+	
+	System.out.println(LCSTopDown(a, b));
+	
+}
+
+public static int LCSTopDown(String a,String b)
+{
+	
+	int ans = 0;
+	int[][] arr = new int[a.length() + 1][b.length() + 1];
+	
+	for(int i = 0; i < a.length()  + 1; i++)
+		arr[i][0] = 0;
+	
+	for(int i = 0; i < b.length() + 1; i++)
+		arr[0][i] = 0;
+	
+	for(int i = 1; i<a.length() + 1; i++)
+	{
+		for(int j = 1; j < b.length() + 1; j++)
+		{
+			if(a.charAt(i - 1) == b.charAt(j - 1)) {
+				arr[i][j] = 1 + arr[i - 1][j - 1];
+				ans  = Math.max(arr[i][j],ans);
+				}
+				else {
+					arr[i][j] = 0;
+				}
+		}
+	}
+		
+	return ans;
+}
+}
