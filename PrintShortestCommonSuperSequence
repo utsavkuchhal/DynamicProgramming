@@ -1,0 +1,66 @@
+
+public class PrintSCP {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String a = "acbcf";
+		String b = "abcdaf";
+		PrintSCP(a, b);
+	}
+
+	public static void PrintSCP(String a, String b) {
+		int[][] arr = new int[a.length() + 1][b.length() + 1];
+
+		for (int i = 0; i < a.length() + 1; i++)
+			arr[i][0] = 0;
+
+		for (int i = 0; i < b.length() + 1; i++)
+			arr[0][i] = 0;
+
+		for (int i = 1; i < a.length() + 1; i++) {
+			for (int j = 1; j < b.length() + 1; j++) {
+				if (a.charAt(i - 1) == b.charAt(j - 1))
+					arr[i][j] = 1 + arr[i - 1][j - 1];
+				else {
+					arr[i][j] = Math.max(arr[i - 1][j], arr[i][j - 1]);
+				}
+			}
+		}
+
+		int i = a.length();
+		int j = b.length();
+		String ans  = "";
+		while(i > 0 && j > 0)
+		{
+			if(a.charAt(i - 1) == b.charAt(j - 1))
+			{
+				ans  = ans + a.charAt(i - 1);
+				i--;
+				j--;
+			}
+			else {
+				if(arr[i - 1][j]  > arr[i][j - 1]) {
+					ans  = ans  + a.charAt(i - 1);
+					i--;
+				}else {
+					ans  = ans + b.charAt(j - 1);
+					j--;
+				}
+			}
+		}
+		while(i > 0)
+		{
+			ans  = ans + a.charAt(i - 1);
+			i--;
+		}
+		while(j > 0) {
+			ans  = ans  + b.charAt(j - 1);
+			j--;
+		}
+		
+		for(int k = ans.length() - 1; k >= 0; k--)
+		{
+			System.out.print(ans.charAt(k));	
+		}
+	}
+}
