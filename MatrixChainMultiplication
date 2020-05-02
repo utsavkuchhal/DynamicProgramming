@@ -1,0 +1,60 @@
+import java.util.Arrays;
+
+public class MatrixChainMultiplication {
+
+	public static int[][] aja = new int[1001][1001];
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int[] arr  = {10,20,30};
+		
+		for(int[] row : aja) {
+			Arrays.fill(row, -1);
+		}
+		
+		System.out.println(MatrixChainMultiplicationMemo(arr,1,arr.length - 1));
+		
+
+	}
+
+	public static int MatrixChainMultiplication(int[] arr,int i, int j)
+{
+	if(i >= j)
+		return 0;
+	
+	int mn = Integer.MAX_VALUE;
+	
+	for(int k = i; k < j; k++)
+	{
+		int temp = MatrixChainMultiplication(arr,i,k) + MatrixChainMultiplication(arr,k + 1,j)
+		 + arr[i - 1]*arr[k]* arr[j];
+		
+		if(mn > temp)
+			mn = temp;
+	}
+	return mn;
+	}
+	
+	public static int MatrixChainMultiplicationMemo(int[] arr,int i, int j) {
+		if(i >= j)
+			return 0;
+		
+		if(aja[i][j] != -1)
+			return aja[i][j];
+		
+		int mn = Integer.MAX_VALUE;
+		
+		for(int k = i; k < j; k++)
+		{
+			int temp = MatrixChainMultiplication(arr,i,k) + MatrixChainMultiplication(arr,k + 1,j)
+			 + arr[i - 1]*arr[k]* arr[j];
+			
+			if(mn > temp)
+				mn = temp;
+		}
+		return aja[i][j] = mn;
+	}
+	}
+	
+	
