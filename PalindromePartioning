@@ -1,0 +1,107 @@
+import java.util.Arrays;
+
+public class PalindromePartioning {
+
+	public static int[][] array = new int[1001][1001];
+	public static int left = 0;
+	public static int right = 0;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	String s = "ababbbabbababa";
+	int i = 0;
+	int j = s.length() - 1;
+	
+	for(int[] row : array)
+		Arrays.fill(row, -1);
+	
+	System.out.println(PalindromePartioningMemoOptimize(i, j, s));
+	}
+	
+	public static int PalindromePartioning(int i,int j,String s)
+	{
+		if(i >= j)
+			return 0;
+		if(isPalindrome(s, i, j))
+			return 0;
+		int mn = Integer.MAX_VALUE;
+		for(int k = i; k < j; k++)
+		{
+			int temp = PalindromePartioning(i, k, s) + PalindromePartioning(k + 1, j, s) + 1;
+			
+			if(mn > temp)
+				mn = temp;
+		}
+		return mn;
+	}
+	
+	public static boolean isPalindrome(String s,int i, int j)
+	{
+		int k  = i;
+		int l = j;
+		while(i < j) {
+			if(s.charAt(i) != s.charAt(j))
+				return false;
+			i++;
+			j--;
+		}
+		return true;
+	}
+	
+	public static int PalindromePartioningMemo(int i, int j, String s)
+	{
+		if(i >= j)
+			return 0;
+		if(isPalindrome(s, i, j))
+			return 0;
+		
+		if(array[i][j] != -1)
+			return  array[i][j];
+		
+		int mn = Integer.MAX_VALUE;
+		for(int k = i; k < j; k++)
+		{
+			int temp = PalindromePartioningMemo(i, k, s) + PalindromePartioningMemo(k + 1, j, s) + 1;
+			
+			if(mn > temp)
+				mn = temp;
+		}
+		return array[i][j] =  mn;
+	}
+	
+	public static int PalindromePartioningMemoOptimize(int i, int j, String s)
+	{
+
+		if(i >= j)
+			return 0;
+		if(isPalindrome(s, i, j))
+			return 0;
+		
+		if(array[i][j] != -1)
+			return  array[i][j];
+		
+		
+		int mn = Integer.MAX_VALUE;
+		for(int k = i; k < j; k++)
+		{
+		
+			if(array[i][k] != -1)
+				left = array[i][k];
+			else {
+				left = PalindromePartioningMemoOptimize(i, k, s);
+				array[i][k] = left;
+			}
+			
+			if(array[k + 1][j] != 0)
+				right = array[k + 1][j];
+			else {
+				right = PalindromePartioningMemoOptimize(k + 1, j, s);
+				array[k + 1][j] = right;
+			}
+			int temp = left + right + 1;
+			
+			if(mn > temp)
+				mn = temp;
+		}
+		return array[i][j] =  mn;
+	}}
