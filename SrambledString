@@ -1,0 +1,82 @@
+import java.util.HashMap;
+
+public class SrambledString {
+
+	public static HashMap<String,Boolean> map = new HashMap<String, Boolean>();
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			String a = "great";
+			String b = "abc";
+			
+			System.out.println(isScramble(a, b));
+	}
+	
+	public static boolean cond1;
+	public static boolean cond2;
+	
+//	public static boolean isScramble(String s1, String s2) 
+//	{
+//	
+//		if(s1.compareTo(s2) == 0)
+//			return true;
+//		
+//		if(s1.length() <= 1)
+//			return false;
+//	            
+//	    boolean scramble = false;
+//	    int length = s1.length();
+//	    for( int i = 1; i < length; i++ )
+//	    {
+//	        scramble = scramble || 
+//	                   ( isScramble( s1.substring( 0, i ), s2.substring( 0, i ) ) &&
+//	                   isScramble( s1.substring( i, length), s2.substring( i, length) ) )||
+//	                   ( isScramble( s1.substring( 0, i ), s2.substring( length - i, length ) ) &&
+//			   isScramble( s1.substring( i, length), s2.substring( 0, length-  i) ) );
+//	    }
+//
+//	    return scramble;
+//	}
+	
+	
+	public static boolean  isAnagram( String s1, String s2 )
+	{
+	   // sort and check
+	    if( s1 != s2 )
+	        return false;
+	    else return true;
+	}
+	
+	
+	public static boolean isScramble(String s1,String s2)
+	{
+		if(s1.compareTo(s2) == 0)
+			return true;
+		
+		//check a and b should be anagram
+		
+		if(s1.length() <= 1)
+			return false;
+		
+		String key = s1 + " " + s2;
+		if(map.containsKey(key))
+			return map.get(key);
+		
+		
+	            
+	    boolean scramble = false;
+	    int length = s1.length();
+	    for( int i = 1; i < length; i++ )
+	    {
+	        scramble = scramble || 
+	                   ( isScramble( s1.substring( 0, i ), s2.substring( 0, i ) ) &&
+	                   isScramble( s1.substring( i, length), s2.substring( i, length) ) )||
+	                   ( isScramble( s1.substring( 0, i ), s2.substring( length - i, length ) ) &&
+			   isScramble( s1.substring( i, length), s2.substring( 0, length-  i) ) );
+	    }
+
+	     map.put(key, scramble) ;
+	     return scramble;
+	}
+
+}
