@@ -1,0 +1,93 @@
+import java.util.Arrays;
+
+public class EggDropingProblem {
+
+	public static int[][] arr  = new int[1001][1001];
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	//System.out.println(EggDropingProblem(4, 0));
+
+	for(int[] row : arr)
+	{
+		Arrays.fill(row, -1);
+	}
+	
+	System.out.println(EggDropingProblemMemo(4, 2));
+	
+	}
+	
+	public static int EggDropingProblem(int f, int e)
+	{
+		if( f == 0 || f == 1)
+			return f;
+		
+		if(e == 1)
+			return f;
+		if(e== 0)
+			return 0;
+		
+		int min = Integer.MAX_VALUE;
+		
+		for(int i = 1; i <= f; i++)
+		{
+			int temp = 1 + Math.max(EggDropingProblem(i - 1, e - 1), EggDropingProblem(f - i, e));
+			
+			if(min  > temp)
+				min = temp;
+		}
+		return min;
+	}
+	
+	public static int EggDropingProblemMemo(int f, int e)
+	{
+
+		if( f == 0 || f == 1)
+			return f;
+		
+		if(e == 1)
+			return f;
+		if(e== 0)
+			return 0;
+		
+		if(arr[f][e] != -1)
+			return arr[f][e];
+		
+		int min = Integer.MAX_VALUE;
+		
+		for(int i = 1; i <= f; i++)
+		{
+			int temp = 1 + Math.max(EggDropingProblem(i - 1, e - 1), EggDropingProblem(f - i, e));
+			
+			if(min  > temp)
+				min = temp;
+		}
+		return arr[f][e]  = min;
+	}
+	
+	public static int EggDropingProblemTopDown(int f,int e)
+	{
+
+		if( f == 0 || f == 1)
+			return f;
+		
+		if(e == 1)
+			return f;
+		if(e== 0)
+			return 0;
+		
+		if(arr[f][e] != -1)
+			return arr[f][e];
+		
+		int min = Integer.MAX_VALUE;
+		
+		for(int i = 1; i <= f; i++)
+		{
+			//same optimization of palidrome partitioning
+			int temp = 1 + Math.max(EggDropingProblem(i - 1, e - 1), EggDropingProblem(f - i, e));
+			
+			if(min  > temp)
+				min = temp;
+		}
+		return arr[f][e]  = min;
+	}
+}
