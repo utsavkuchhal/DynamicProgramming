@@ -1,0 +1,69 @@
+import java.util.Arrays;
+
+public class Coin_change_min_coins {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr = {1,2,3};
+		int sum = 5;
+		int[] a = new int[100];
+		Arrays.fill(a,-1);
+		System.out.println(Coin_change_min_coins(arr,sum));
+		System.out.println(Coin_change_min_coins_Memo(arr, sum, a));
+		System.out.println(Coin_change_min_coins_Bottom_up(arr, sum));
+	}
+	
+	public static int Coin_change_min_coins(int[] arr,int sum)
+	{
+		if(sum == 0)
+			return 0;
+		int ans = Integer.MAX_VALUE;
+		for(int i = 0; i < arr.length; i++)
+		{
+			if (sum >= arr[i]) {
+				int subprob = Coin_change_min_coins(arr,sum - arr[i]);
+			ans  = Math.min(ans,subprob + 1);
+			}
+		}
+		return ans;
+	}
+	
+	public static int Coin_change_min_coins_Memo(int[] arr, int sum,int[] a)
+	{
+		if (sum == 0) {
+			return 0;
+		}
+		if (a[sum] != -1) {
+			return a[sum];
+		}
+		int ans = Integer.MAX_VALUE;
+		
+		for (int i = 0; i < arr.length; i++) {
+			if (sum >= arr[i]) {
+				int subprob = Coin_change_min_coins(arr,sum - arr[i]);
+			ans  = Math.min(ans,subprob + 1);
+			}
+		}
+		
+		return a[sum]  = ans;
+	}
+	
+	public static int Coin_change_min_coins_Bottom_up(int[] arr,int sum)
+	{
+		int[] dp = new int[sum + 1];
+		dp[0] = 0;
+		
+		for (int i = 1; i <= sum; i++) {
+			dp[i] = Integer.MAX_VALUE;
+			for(int j = 0; j < arr.length; j++)
+			{
+				if (i  - arr[j] >= 0) {
+					int subprob = dp[i - arr[j]];
+					dp[i] = Math.min(dp[i], subprob + 1);	
+				}
+			}
+		}
+		return dp[sum];
+	}
+
+}
