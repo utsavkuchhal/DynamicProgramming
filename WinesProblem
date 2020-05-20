@@ -1,0 +1,65 @@
+import java.util.Arrays;
+
+public class WinesProblem {
+	static int[][] ans = new int[100][100];
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr = {2,3,5,1,4};
+		System.out.println(WinesProblem(arr, 0, arr.length - 1,1));
+		for(int[] row : ans)
+		{
+			Arrays.fill(row, -1);
+		}
+		System.out.println(WinesProblemBottomUp(arr,0, arr.length - 1, 1));
+		
+		System.out.println(WinesProblemBottomUp(arr));
+		
+	}
+	
+	
+	public static int WinesProblem(int[] arr,int start, int end, int year)
+	{
+		if (start >end ) {
+			return 0;
+		}
+		
+		int startstart = arr[start] * year + WinesProblem(arr, start + 1, end, year+ 1);
+		int endstart = arr[end] * year + WinesProblem(arr,start, end - 1, year +1);
+		
+		return Math.max(startstart,endstart);
+	}
+	
+	
+	public static int WinesProblemBottomUp(int[] arr,int start, int end, int year)
+	{
+		if (start >end ) {
+			return 0;
+		}
+		
+		if(ans[start][end] != -1)
+			return ans[start][end];
+		
+		int startstart = arr[start] * year + WinesProblem(arr, start + 1, end, year+ 1);
+		int endstart = arr[end] * year + WinesProblem(arr,start, end - 1, year +1);
+		
+		return ans[start][end] = Math.max(startstart,endstart);
+	}
+	
+	public static int WinesProblemBottomUp(int[] arr)
+	{
+		int[][] dp = new int[arr.length][arr.length];
+		int i = 0;
+		int j = arr.length - 1;
+		while(i < j)
+		{
+			if(i == j)
+				dp[i][j] = arr[i] * arr.length;
+			
+			dp[i][j] = Math.max(dp[i + 1][j],dp[i][j - 1]);
+			i++;
+			j--;
+		}
+		return dp[arr.length - 1][arr.length - 1];
+	}
+
+}
